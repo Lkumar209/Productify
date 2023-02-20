@@ -2,6 +2,8 @@ from tkinter import *
 import tkinter as tk
 from tkinter import messagebox
 from tkinter import ttk, PhotoImage, Toplevel
+import ttkbootstrap as tb
+import customtkinter as ctk
 from threading import Thread
 import threading
 import requests
@@ -10,6 +12,7 @@ import random
 import time
 import plyer
 from plyer import notification 
+from pathlib import Path
 
 def sendMessage(pn, em, title, body):
   api_key = "pk_prod_HF62V1AYE64SNFQTXTF3YE9MRD0F"
@@ -36,11 +39,12 @@ def sendMessage(pn, em, title, body):
   response = requests.request("POST", url, headers = headers, json = payload)
   return response
 
-window=Tk ()
+window=tb.Window(themename = "darkly")
 window.withdraw()
 window.title('Productify')
 window.geometry('1430x750')
-window.resizable(0,0)
+window.resizable(0,0) 
+#window.attributes('-fullscreen',True)
 
 email = StringVar()
 phonenumber = StringVar()
@@ -51,9 +55,9 @@ phonenumber = StringVar()
 class login():
 
     def __init__(self):
-        self.top = tk.Toplevel()
-        self.top.geometry("500x400")
-        self.top.title("Pomodoro Timer")
+        self.top = tb.Toplevel()
+        self.top.geometry("500x500")
+        self.top.title("Login Window")
   
         self.style = ttk.Style()
         self.style.configure("TNotebook.Tab", font = ("Ubuntu", 16))
@@ -64,8 +68,8 @@ class login():
         self.tabs.pack(fill = "both", pady = 10, expand = True)
         
 
-        self.tab1 = ttk.Frame(self.tabs, width = 500, height = 400)
-        self.tab2 = ttk.Frame(self.tabs, width = 300, height = 400)
+        self.tab1 = ttk.Frame(self.tabs, width = 500, height = 500)
+        self.tab2 = ttk.Frame(self.tabs, width = 500, height = 500)
 
         
 
@@ -74,13 +78,13 @@ class login():
 
         #self.grid_layout = ttk.Frame(self.tab1)
 
-        self.enterUserLabel = ttk.Label(self.tab1, text = "Enter Username:", font = ("Ubuntu", 16))
+        self.enterUserLabel = tb.Label(master = self.tab1, text = "Enter Username:", font = ("Ubuntu", 16),  )
         self.enterUserLabel.pack(side = TOP, pady = 30)
 
         self.enterUserArea = Text(self.tab1, height = 2, width = 30)
         self.enterUserArea.pack(side = TOP)
 
-        self.enterPassLabel = ttk.Label(self.tab1, text = "Enter Password:", font = ("Ubuntu", 16))
+        self.enterPassLabel = ttk.Label(self.tab1, text = "Enter Password:", font = ("Ubuntu", 16),   )
         self.enterPassLabel.pack(side = TOP, pady = 30)
 
         self.enterPassArea = Text(self.tab1, height = 2, width = 30)
@@ -88,54 +92,86 @@ class login():
         
         self.submitInfo = ttk.Button(self.tab1, text = "Submit Info", command = self.login)
         self.submitInfo.pack(side = TOP, pady = 20)
-
-        self.createUserLabel = ttk.Label(self.tab2, text = "Create Username:", font = ("Ubuntu", 16))
+    
+        self.createUserLabel = ttk.Label(self.tab2, text = "Create Username:", font = ("Ubuntu", 16),   )
         self.createUserLabel.pack(side = TOP, anchor = 'nw', pady = 10)
 
-        self.createUserArea = Text(self.tab2, height = 1, width = 30)
+        self.createUserArea = Text(self.tab2, height = 1, width = 30) 
         self.createUserArea.pack(side = TOP, anchor = 'nw')
 
-        self.createPassLabel = ttk.Label(self.tab2, text = "Create Password:", font = ("Ubuntu", 16))
+        self.createPassLabel = ttk.Label(self.tab2, text = "Create Password:", font = ("Ubuntu", 16),  )
         self.createPassLabel.pack(side = TOP, anchor = 'nw', pady = 10)
 
         self.createPassArea = Text(self.tab2, height = 1, width = 30)
         self.createPassArea.pack(side = TOP, anchor = 'nw')
 
-        self.createPassAgainLabel = ttk.Label(self.tab2, text = "Enter Password again:", font = ("Ubuntu", 16))
+        self.createPassAgainLabel = ttk.Label(self.tab2, text = "Enter Password again:", font = ("Ubuntu", 16), )
         self.createPassAgainLabel.pack(side = TOP, anchor = 'nw', pady = 10)
 
         self.createPassAgainArea= Text(self.tab2, height = 1, width = 30)
         self.createPassAgainArea.pack(side = TOP, anchor = 'nw')
 
-        self.createEmailLabel = ttk.Label(self.tab2, text = "Create Email:", font = ("Ubuntu", 16))
+        self.createEmailLabel = ttk.Label(self.tab2, text = "Create Email:", font = ("Ubuntu", 16),  )
         self.createEmailLabel.pack(side = TOP, anchor = 'nw', pady = 10)
         
         self.createEmailArea = Text(self.tab2, height = 1, width = 30)
         self.createEmailArea.pack(side = TOP, anchor = 'nw')
 
-        self.createPhoneNLabel = ttk.Label(self.tab2, text = "Create Phone #:", font = ("Ubuntu", 16))
+        self.createPhoneNLabel = ttk.Label(self.tab2, text = "Create Phone #:", font = ("Ubuntu", 16), )
         self.createPhoneNLabel.pack(side = TOP, anchor = 'nw', pady = 10)
 
         self.createPhoneNArea = Text(self.tab2, height = 1, width = 30)
         self.createPhoneNArea.pack(side = TOP, anchor = 'nw')
 
-        self.submitAccInfo = ttk.Button(self.tab2, text = "Submit Info",  command = self.registerUser)
-        self.submitAccInfo.place(x = "350", y = "150")
-
+        self.submitAccInfo = ttk.Button(self.tab2, text = "Submit Info",  command = self.verifyUser)
+        self.submitAccInfo.place(x = "320", y = "150")
+        
         self.top.mainloop()
 
-    def registerUser(self):
-        
+    def verifyUser(self):
         if (len(self.createUserArea.get("1.0", END))==1 or len(self.createPassArea.get("1.0", END))==1 
         or len(self.createPassAgainArea.get("1.0", END))==1 or len(self.createEmailArea.get("1.0", END))==1 or len(self.createPhoneNArea.get("1.0", END))==1):
             messagebox.showwarning(title="Missing Information", message="Please enter all required fields")
             return
-        if self.createPassAgainArea.get("1.0",END) == self.createPassArea.get("1.0",END):
-            file=open(self.createUserArea.get("1.0", END).strip()+".txt", "w")
-            file.write(self.createUserArea.get("1.0", END) + "" + self.createPassArea.get("1.0", END) + "" + self.createEmailArea.get("1.0", END) + "" +  self.createPhoneNArea.get("1.0", END))
-            messagebox.showinfo(title="Done", message="Registration complete!")
-            file.close()
+        if self.createPassAgainArea.get("1.0",END).strip() == self.createPassArea.get("1.0",END).strip(): # add else
+
+            self.verify = tb.Toplevel()
+            self.verify.geometry("500x300")
+            self.verify.title("Verification Code")
+            self.verify.grab_set()
+            self.verifyLabel = ttk.Label(self.verify, text = "Enter 6-digit code sent to phone/email", font = ("Ubuntu", 16), )
+            self.verifyLabel.pack(side = TOP, pady = 5)
+            self.verifyBox = Text(self.verify, height = 1, width = 30)
+            self.verifyBox.pack(side = TOP, pady = 50)
+            self.code =  str(random.choice(range(100000, 999999)))
+            sendMessage(self.createPhoneNArea.get("1.0", END), self.createEmailArea.get("1.0", END), "Verification code", "Your code is " + self.code)
+            self.submitCode = ttk.Button(self.verify, text = "Submit Info",  command = self.checkCode)
+            self.submitCode.pack(side = TOP, pady = 50)
+            
+        else:
+            messagebox.showwarning(title="Matching", message="Passwords do not match!")
+            return
+    def checkCode(self):
+        
+        if(self.verifyBox.get("1.0", END).strip() == str(self.code)):
+            self.registerUser()
+            self.verify.destroy()
+        else:
+            messagebox.showwarning(title="Incorrect code", message="Code is incorrect, redo authentication. ")
+            self.verify.destroy()
+        
+            
+    def registerUser(self):
+            filename = self.createUserArea.get("1.0", END).strip()+".txt"
+            if(Path(filename).is_file() == False):
+                file=open(filename, "w")
+                file.write(self.createUserArea.get("1.0", END) + "" + self.createPassArea.get("1.0", END) + "" + self.createEmailArea.get("1.0", END) + "" +  self.createPhoneNArea.get("1.0", END))
+                messagebox.showinfo(title="Done", message="Registration complete!")
+                file.close()
+            else:
+                messagebox.showerror(title="Exists", message="Username Already Exists.")
     
+
     def login(self):
         if len(self.enterUserArea.get("1.0", END)) == 1 or len(self.enterPassArea.get("1.0", END)) == 1:
             messagebox.showwarning(title="Missing Information", message="Please enter all required fields")
@@ -203,13 +239,38 @@ frame5=Frame(window, height = 310, width = 350, highlightbackground='black',high
 frame5.place(x = 10, y = 20)
 
 
-# frame6=Frame(window, height = 130, width = 350, highlightbackground ='black',highlightthickness= 5)
-# frame6.place(x=10, y = 348)
+frame6=Frame(window, height = 150, width = 340, highlightbackground ='black',highlightthickness= 5)
+frame6.place(x=10, y = 336) 
 
-# darkMode =Button(frame6, text="Light Mode ", width = 17, height = 1, font=("poppins bold", 18))
-# darkMode.place(x= 50, y = 65)
-# lightMode = Button(frame6, text="Dark Mode ", width = 17, height = 1, font=("poppins bold", 18))
-# lightMode.place(x= 50, y = 5)
+# def customize(): 
+#         button.config(bg="black", activebackground="black")
+#         root.config(bg="black")
+#         button_mode=False
+#     else:
+#         button.config(bg="white", activebackground="white")
+#         root.config(bg="white")
+#         button_mode=True 
+#window=tb.Window(themename = "minty")
+def darkMode():
+    # if window(themename = "minty") :
+        window.style.theme_use("darkly")
+    # elif window(themename = "darkly"):
+    #     window.style.theme_use("minty")
+
+def lightMode():
+        window.style.theme_use("minty")
+  
+
+
+darkMode = Button(frame6, text="Dark Mode ", width = 17, height = 1, font=("poppins bold", 18), command=darkMode)
+darkMode.place(x= 50, y = 20)
+lightMode = Button(frame6, text="Light Mode ", width = 17, height = 1, font=("poppins bold", 18), command=lightMode)
+lightMode.place(x= 50, y = 70)
+
+#write a function to change the tb.Window(themename = "minty") to tb.Window(themename = "darkly")
+#changeMode.config(command = customize)
+#write code for the customize function above
+
 
 
 
