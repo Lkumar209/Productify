@@ -1,4 +1,3 @@
-
 from tkinter import * 
 import tkinter as tk
 from tkinter import messagebox
@@ -43,7 +42,7 @@ def sendMessage(pn, em, title, body):
 window=tb.Window(themename = "darkly")
 window.withdraw()
 window.title('Productify')
-window.geometry('1430x750')
+window.geometry('1580x900')
 window.resizable(0,0) 
 #window.attributes('-fullscreen',True)
 
@@ -57,7 +56,7 @@ class login():
 
     def __init__(self):
         self.top = tb.Toplevel()
-        self.top.geometry("500x500")
+        self.top.geometry("500x650")
         self.top.title("Login Window")
   
         self.style = ttk.Style()
@@ -137,7 +136,7 @@ class login():
         if self.createPassAgainArea.get("1.0",END).strip() == self.createPassArea.get("1.0",END).strip(): # add else
 
             self.verify = tb.Toplevel()
-            self.verify.geometry("500x300")
+            self.verify.geometry("500x500")
             self.verify.title("Verification Code")
             self.verify.grab_set()
             self.verifyLabel = ttk.Label(self.verify, text = "Enter 6-digit code sent to phone/email", font = ("Ubuntu", 16), )
@@ -145,7 +144,7 @@ class login():
             self.verifyBox = Text(self.verify, height = 1, width = 30)
             self.verifyBox.pack(side = TOP, pady = 50)
             self.code =  str(random.choice(range(100000, 999999)))
-            sendMessage(self.createPhoneNArea.get("1.0", END), self.createEmailArea.get("1.0", END), "Verification code", "Your code is " + self.code) #integration of courier
+            sendMessage(self.createPhoneNArea.get("1.0", END), self.createEmailArea.get("1.0", END), "Verification code", "Your code is " + self.code)
             self.submitCode = ttk.Button(self.verify, text = "Submit Info",  command = self.checkCode)
             self.submitCode.pack(side = TOP, pady = 50)
             
@@ -236,11 +235,11 @@ class login():
 
 
 
-frame5=Frame(window, height = 310, width = 350, highlightbackground='black',highlightthickness = 5)
+frame5=Frame(window, height = 310, width = 360, highlightbackground='black',highlightthickness = 5)
 frame5.place(x = 10, y = 20)
 
 
-frame6=Frame(window, height = 150, width = 340, highlightbackground ='black',highlightthickness= 5)
+frame6=Frame(window, height = 210, width = 360, highlightbackground ='black',highlightthickness= 5)
 frame6.place(x=10, y = 336) 
 
 # def customize(): 
@@ -264,9 +263,9 @@ def lightMode():
 
 
 darkMode = Button(frame6, text="Dark Mode ", width = 17, height = 1, font=("poppins bold", 18), command=darkMode)
-darkMode.place(x= 50, y = 20)
+darkMode.place(x= 25, y = 20)
 lightMode = Button(frame6, text="Light Mode ", width = 17, height = 1, font=("poppins bold", 18), command=lightMode)
-lightMode.place(x= 50, y = 70)
+lightMode.place(x= 25, y = 110)
 
 #write a function to change the tb.Window(themename = "minty") to tb.Window(themename = "darkly")
 #changeMode.config(command = customize)
@@ -303,20 +302,20 @@ frame5.grid_propagate(False)
 
 
 main_label = Label(frame5, text="Notifications: Desktop",  font=("poppins bold", 18))
-main_label.place(x=70, y = 20)
+main_label.place(x=50, y = 20)
 
 t_label = Label(frame5, text="Title to notify", font=("poppins", 10))
 t_label.place(x=12, y=70)
 
 
-title  =Entry(frame5, width="20", font=("poppins", 13))
+title  =Entry(frame5, width="13", font=("poppins", 13))
 title.place(x= 123, y = 70)
 
 m_label = Label(frame5, text="Display Message", font=("poppins", 10))
 m_label.place(x=12, y=128)
 
-msg = Entry(frame5, width ="20", font=("poppins", 13))
-msg.place(x=123, y = 120, height=30)
+msg = Entry(frame5, width ="13", font=("poppins", 13))
+msg.place(x=180, y = 120, height=30)
 
 time_label = Label(frame5, text="Set Time", font=("poppins", 10))
 time_label.place(x=12, y = 175)
@@ -327,13 +326,13 @@ time1.place(x = 123, y = 175)
 time_min_label = Label(frame5, text="min", font=("poppins", 10))
 time_min_label.place(x=175, y = 180)
 
-but = Button(frame5, text="SET NOTIFICATION", font=("poppins", 10, 'bold'), fg="#ffffff", bg="#528DFF", width = 35, relief = "raised", command= get_details)
-but.place(x= 30, y = 230)
+but = Button(frame5, text="SET NOTIFICATION", font=("poppins", 10, 'bold'), fg="#ffffff", bg="#528DFF", width = 30, relief = "raised", command= get_details)
+but.place(x= 25, y = 230)
 
 
 
 frame2=Frame(window, height = 500 , width = 550, highlightbackground='black',highlightthickness = 5)
-frame2.place(x = 370, y = 20)
+frame2.place(x = 380, y = 20)
 
 
 def newTask():
@@ -354,7 +353,7 @@ def finishedTask():
     if lb.size() == 0:
         # messagebox.showinfo("Hooray! You finished your tasks!")
         messagebox.showinfo("Congratulations", "Good Job on Finishing your tasks!")
-        sendMessage(str(phonenumber), str(email), "Productify ", "Congrats on Finishing all your tasks for the Day!") #integration of courier
+        sendMessage(str(phonenumber), str(email), "Productify ", "Congrats on Finishing all your tasks for the Day!")
 
 lb = Listbox(frame2, width=25,height=16, font=('Times',18), bd=0,fg='#464646',highlightthickness=0,selectbackground='#a6a6a6',activestyle="none")
 
@@ -407,7 +406,7 @@ delTask_btn = Button(button_frame,text='Delete Task',font=('times 14'), bg='#ff8
 
 delTask_btn.pack(fill=BOTH, expand=True, side=LEFT)
 
-def createQuote(): #integration of quoteapi
+def createQuote():
     url = "https://type.fit/api/quotes"
     response = requests.request("GET", url)
     data = json.loads(response.text)
@@ -429,11 +428,11 @@ def regenquote():
     quoteLabel.config(text = str(quote) + "\n\n-    " + str(author))
     ##print(str(phonenumber))
     ##print(str(email))
-    requestid = sendMessage(str(phonenumber), str(email), "Inspirational Quote", "As " + author + " once said: \n" + quote ) #integration of courier
+    requestid = sendMessage(str(phonenumber), str(email), "Inspirational Quote", "As " + author + " once said: \n" + quote )
     ##print(requestid)
 
-frame3=Frame(window,  height = 220, width = 950, highlightbackground='black',highlightthickness = 5 )
-frame3.place(x= 10, y = 495)
+frame3=Frame(window,  height = 250, width = 1080, highlightbackground='black',highlightthickness = 5 )
+frame3.place(x= 12, y = 610)
 frame3.pack_propagate(False)
 quoteLabel = Label(frame3, wraplength = "900", text = str(quote) + "\n\n-    " + str(author), font = ("Ubuntu", 15))
 quoteLabel.pack(side = TOP, ipadx = "0", ipady = "30")
@@ -441,7 +440,7 @@ regenerateQuote = Button(frame3, text = "Motivate me", fg = "black", command = r
 regenerateQuote.pack(side = BOTTOM, ipadx = "10", ipady = "10", pady = "10")
 
 frame4=Frame(window, height = 725, width = 450, highlightbackground='black',highlightthickness = 5)
-frame4.place(x= 980, y = 20) 
+frame4.place(x= 1100, y = 20) 
 #frame3.grid_propagate(false)
 class PomodoroTimer:
 
@@ -521,11 +520,11 @@ class PomodoroTimer:
                 self.pomodoro_counter_label.config(text = f"Pomodoros: {self.pomodoros}")
                 if self.pomodoros % 4 == 0:
                     self.tabs.select(2)
-                    rid = sendMessage(str(phonenumber), str(email), "Pause Work!", "Good Job! Take a Short Break!") #integration of courier
+                    rid = sendMessage(str(phonenumber), str(email), "Pause Work!", "Good Job! Take a Short Break!")
                     #print(rid)
                 else:
                     self.tabs.select(1)
-                    rid = sendMessage(str(phonenumber), str(email), "Pause Work!", "Good Job! Take a Short Break!") #integration of courier
+                    rid = sendMessage(str(phonenumber), str(email), "Pause Work!", "Good Job! Take a Short Break!")
                     #print(rid)
                 self.start_timer()
         elif timer_id == 2:
@@ -538,7 +537,7 @@ class PomodoroTimer:
                 timeLeft-=1
             if not self.stopped or self.skipped:
                 self.tabs.select(0)
-                rid = sendMessage(phonenumber, email, "Break End", "Your Break Is Over :( Please Get Back to Work!")#integration of courier
+                rid = sendMessage(phonenumber, email, "Break End", "Your Break Is Over :( Please Get Back to Work!")
                 #print(rid)
                 self.start_timer()
         elif timer_id==3:
@@ -551,7 +550,7 @@ class PomodoroTimer:
                 timeLeft-=1
             if not self.stopped or self.skipped:
                 self.tabs.select(0)
-                rid = sendMessage(phonenumber, email, "Break End", "Your Break Is Over :( Please Get Back to Work!")#integration of courier
+                rid = sendMessage(phonenumber, email, "Break End", "Your Break Is Over :( Please Get Back to Work!")
                 #print(rid)
                 self.start_timer()
                 
@@ -583,6 +582,7 @@ class PomodoroTimer:
         self.running = False
 PomodoroTimer() 
 login()  
+      
+
 
 window.mainloop()
-
